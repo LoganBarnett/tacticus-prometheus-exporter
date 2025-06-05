@@ -1,0 +1,20 @@
+[package]
+name = "tacticus-prometheus-exporter"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+prometheus-client = { version = "0.23.1", features = ["protobuf"] }
+# Give us a neat way to log or perform effects in the middle of a call chain.
+tap = "1.0.1"
+serde = { version = "^1.0", features = ["derive"] }
+serde_json = "^1.0"
+serde_repr = "^0.1"
+url = "^2.5"
+reqwest = { version = "^0.12" }
+clap-verbosity-flag = "3.0.3"
+clap = { version = "4.5.39", features = ["derive", "env"] }
+stderrlog = "0.6.0"
+actix-web = "4.11.0"
+log = "0.4.27"
+tokio = { version = "1.45.1", features = ["rt-multi-thread"] }

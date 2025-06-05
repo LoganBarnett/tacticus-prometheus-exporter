@@ -1,0 +1,36 @@
+#+title:     Tacticus Prometheus Exporter
+#+author:    Logan Barnett
+#+email:     logustus@gmail.com
+#+date:      <2025-06-02 Mon>
+#+language:  en
+#+file_tags:
+#+tags:
+
+Provide an OpenMetrics / Prometheus exporter for the Tacticus API.
+
+Here be dragons.  This is a very rough work in progress, and hasn't achieved a
+minimum viable status yet.
+
+The Swagger specification is a little hard to find, but you can get it here:
+https://api.tacticusgame.com/swagger-ui/index.html#/
+
+* Tracking Tacticus API issues
+
+** Issue Tracker
+
+There is no issue tracker that I am aware of.  I've asked on the Discord, and
+await a reply.
+
+** API definition
+
+*** Invalid Model Names
+
+Model names contain spaces.  ~openapi-generator~ disagrees with this, though I
+can disable that validation.  I'll have to check to see if this is actually part
+of the OpenAPI specification. This is low priority since I have a workaround.
+
+*** ~Xp Book~ has ~xpUncommon~ twice, but no ~xpCommon~
+
+This is rather unfortunate, because the API itself will yield back ~xpCommon~.
+
+I should be able to generate a repair for this though.
