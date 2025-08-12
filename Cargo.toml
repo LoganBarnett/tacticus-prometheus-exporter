@@ -3,6 +3,10 @@ name = "tacticus-prometheus-exporter"
 version = "0.1.0"
 edition = "2021"
 
+[profile.dev]
+# Prevent 36GB target/debug directories.
+debug = false
+
 [dependencies]
 prometheus-client = { version = "0.23.1", features = ["protobuf"] }
 # Give us a neat way to log or perform effects in the middle of a call chain.
