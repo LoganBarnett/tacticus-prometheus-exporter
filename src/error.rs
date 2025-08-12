@@ -5,4 +5,5 @@ pub enum AppError {
   HttpBindError(std::io::Error),
   LoggingInitializationError(log::SetLoggerError),
   GetPlayerError(crate::apis::Error<crate::apis::tacticus_player_api_api::GetPlayerError>),
+  GetGuildError(crate::apis::Error<crate::apis::tacticus_player_api_api::GetGuildError>),
 }

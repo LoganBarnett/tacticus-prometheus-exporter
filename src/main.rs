@@ -11,22 +11,37 @@ use clap::Parser;
 use cli::Cli;
 use error::AppError;
 use prometheus_client::encoding::text::encode;
-use prometheus_client::encoding::{EncodeLabelSet, EncodeLabelValue};
+use prometheus_client::encoding::{
+  EncodeLabelSet,
+  EncodeLabelValue,
+  EncodeMetric,
+};
 use prometheus_client::metrics::counter::Counter;
 use prometheus_client::metrics::family::Family;
+use prometheus_client::metrics::gauge::Gauge;
 use prometheus_client::registry::Registry;
 use tacticus_poll::poll;
 use tap::Tap;
 use std::sync::Mutex;
 use ::log::*;
 
+#[derive(Debug)]
 pub struct Metrics {
-
+  guild_member_activity: Family<Vec<String>, Gauge>,
 }
 
 pub struct AppState {
   pub metrics: Metrics,
   pub registry: Registry,
+}
+
+pub fn register(registry: &mut Registry, metrics: &Metrics) -> () {
+  let name = "name";
+  let help = "help";
+  // TODO: Figure out what this wants.  It's not obvious from looking at the
+  // basic example found here:
+  // https://docs.rs/prometheus-client/latest/prometheus_client/#examples
+  // registry.register(name, help, metrics.guild_member_activity);
 }
 
 pub async fn metrics_handler(
@@ -52,9 +67,12 @@ async fn main() -> Result<(), AppError> {
   logger::logger_init(&cli_args.verbosity)?;
   poll(&api_key.into(), cli_args.poll_rate);
   let mut app_state = AppState {
-    metrics: Metrics {},
+    metrics: Metrics {
+      guild_member_activity: Family::<Vec<String>, Gauge>::default(),
+    },
     registry: Registry::default(),
   };
+  register(&mut app_state.registry, &app_state.metrics);
   let app_data = web::Data::new(Mutex::new(app_state));
   let bind_address = "0.0.0.0";
   let port = 8080;
